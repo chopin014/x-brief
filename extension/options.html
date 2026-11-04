@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your reading schedule · X Brief</title>
+    <link rel="stylesheet" href="ui.css" />
+    <script src="options.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">X BRIEF / READING SETTINGS</p>
+      <h1>Make room for the useful.</h1>
+      <p class="lead">
+        Keep discovery. Give it a place in your day, and a point where it ends.
+      </p>
+      <div class="layout">
+        <form id="schedule">
+          <div class="field">
+            <label for="times">When do you want to read?</label
+            ><input
+              id="times"
+              name="times"
+              required
+              placeholder="09:00, 18:00"
+              autocomplete="off"
+            />
+            <p class="hint">
+              Local time, separated by commas. One edition per window. No
+              reminders.
+            </p>
+          </div>
+          <div class="field">
+            <label for="windowMinutes">Time to start a session</label
+            ><input
+              type="number"
+              id="windowMinutes"
+              min="10"
+              max="180"
+              required
+            />
+            <p class="hint">
+              Minutes after each scheduled time. Unused sessions don’t
+              accumulate.
+            </p>
+          </div>
+          <div class="pair">
+            <div class="field">
+              <label for="maxPosts">Maximum posts</label
+              ><input type="number" id="maxPosts" min="5" max="20" required />
+            </div>
+            <div class="field">
+              <label for="activeMinutes">Reading minutes</label
+              ><input
+                type="number"
+                id="activeMinutes"
+                min="1"
+                max="30"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit">Save reading schedule</button>
+          <p class="status" id="status" role="status"></p>
+        </form>
+        <aside>
+          <p>
+            <strong>The algorithm stays.</strong><br />Your edition comes from
+            X’s For you recommendations, in their original order.
+          </p>
+          <p>
+            <strong>The batch stays still.</strong><br />No infinite scroll,
+            new-post banners, or automatic refreshes.
+          </p>
+          <p>
+            <strong>The stop holds.</strong><br />After your first session,
+            setting changes apply tomorrow. Refreshing or opening another tab
+            won’t reset your session.
+          </p>
+          <p>
+            Your schedule uses this device’s local timezone. Saved posts and
+            settings stay in this browser.
+          </p>
+        </aside>
+      </div>
+      <section class="rule" id="shelf">
+        <p class="eyebrow">KEPT FOR LATER</p>
+        <h2>Something worth returning to.</h2>
+        <p class="empty">
+          A quiet shelf of posts you kept. No new recommendations.
+        </p>
+        <div id="kept" class="kept"></div>
+      </section>
+    </main>
+  </body>
+</html>

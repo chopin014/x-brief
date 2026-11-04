@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "X Brief",
+  "version": "0.1.0",
+  "description": "Read a finite briefing. No infinite feed, refresh prompts, or extra batches until your next scheduled session.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "x-brief@local.gabriel",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "https://x.com/*",
+    "https://*.x.com/*",
+    "https://twitter.com/*",
+    "https://*.twitter.com/*"
+  ],
+  "background": {
+    "scripts": ["core.js", "posts.js", "background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://twitter.com/*",
+        "https://www.x.com/*",
+        "https://www.twitter.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_title": "X Brief",
+    "default_popup": "popup.html",
+    "default_icon": "icons/brief.svg"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "icons/brief.svg",
+    "96": "icons/brief.svg"
+  }
+}
