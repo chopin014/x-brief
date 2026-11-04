@@ -32,3 +32,11 @@ There are no streaks, reading scores, achievement prompts, or notifications aski
 ## Scope of evidence
 
 The normal native event metadata is retained. We have not measured long-term recommendation quality or proved a psychological outcome. A finite briefing can reduce the opportunity to keep consuming; it cannot guarantee that every selected post is valuable or that the user will never bypass the extension.
+
+## 0.1.2 follow-up
+
+- First use now offers a single immediate edition. Only a successfully captured batch consumes that opportunity; subsequent editions use the normal schedule. The earlier developer test edition was cleared from the installed profile.
+- Removed taglines and redundant introductory copy from the reader, popup, and settings.
+- Notification badge polling is blocked; cached unread badges are hidden, and the browser tab unread count is removed. Notification timelines remain limited to the existing edition gate.
+- Installed 0.1.2 in the main Zen profile. Home visibly offers **Try it now**, with the 20-post / 10-minute limits. A representative cached badge inserted into the real notification link computed to `display: none`.
+- 31 tests pass; extension validation reports zero errors, notices, or warnings.

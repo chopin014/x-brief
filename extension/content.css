@@ -555,3 +555,11 @@ html[data-brief-theme="dark"] #x-brief-status {
 html[data-brief-theme="dark"] #x-brief-status :is(a, .brief-link) {
   color: #b9c9ef;
 }
+
+/* Unread indicators never compete for attention, including cached counts. */
+html[data-brief-installed]
+  [data-testid="AppTabBar_Notifications_Link"]
+  [aria-live],
+html[data-brief-installed] a[href="/notifications"] [aria-live] {
+  display: none !important;
+}

@@ -55,6 +55,15 @@
     doc.toggleAttribute("data-brief-native", home() && nativeVisible());
     doc.toggleAttribute("data-brief-profile", active() && !!profileAllowed());
     doc.setAttribute("data-brief-installed", "");
+    const title = document.title.replace(/^\(\d+\)\s*/, "");
+    if (document.title !== title) document.title = title;
+    for (const link of document.querySelectorAll('a[href="/notifications"]')) {
+      const label = (
+        link.getAttribute("aria-label") || "Notifications"
+      ).replace(/\s*\([^)]*\)\s*$/, "");
+      if (link.getAttribute("aria-label") !== label)
+        link.setAttribute("aria-label", label);
+    }
   }
   guard();
   function el(tag, cls, text) {
@@ -347,9 +356,8 @@
   function shell(title, copy) {
     const intro = el("header", "brief-intro");
     intro.append(
-      el("p", "brief-eyebrow", "X BRIEF / FOR YOU"),
       el("h1", "", title),
-      el("p", "brief-description", copy),
+      ...(copy ? [el("p", "brief-description", copy)] : []),
     );
     root.append(intro);
   }
@@ -404,10 +412,7 @@
       return;
     }
     if (shelfOpen) {
-      shell(
-        "Kept for later.",
-        "Private copies, saved on this device. No new recommendations.",
-      );
+      shell("Kept posts", "Saved on this device.");
       root.append(
         action(
           active() ? "Back to this edition" : "Back to schedule",
@@ -444,15 +449,12 @@
       );
       root.append(action("Back to the edition", back));
     } else if (active() && s.phase === "frozen") {
-      shell(
-        editionName(),
-        "Saved from X’s For you recommendations, in their original order.",
-      );
+      shell(editionName(), "");
       root.append(
         el(
           "p",
           "brief-description",
-          `${s.posts.length} posts · saved ${time(s.frozenAt)}. Refreshing keeps this edition.`,
+          `${s.posts.length} posts · saved ${time(s.frozenAt)}`,
         ),
       );
       root.append(
@@ -468,10 +470,7 @@
       list.querySelectorAll("article").forEach(observe);
       restorePosition();
     } else if (active() && ["ready", "loading"].includes(s.phase)) {
-      shell(
-        "Opening your edition.",
-        "One batch of For you recommendations. No posts will be added while you read.",
-      );
+      shell("Opening your edition.", "");
       root.append(el("div", "brief-loading", "Getting your recommendations…"));
       chooseForYou();
     } else if (active() && s.phase === "error") {
@@ -490,7 +489,7 @@
       );
     } else if (view.available) {
       shell(
-        editionName(view.now),
+        view.firstUse ? "Try X Brief" : editionName(view.now),
         new Date(view.now).toLocaleDateString([], {
           weekday: "long",
           day: "numeric",
@@ -499,35 +498,28 @@
       );
       const spec = el("div", "brief-session-spec");
       spec.append(
-        el(
-          "span",
-          "",
-          `One ranked batch · at most ${view.settings.maxPosts} posts`,
-        ),
-        el(
-          "span",
-          "",
-          `${view.settings.activeMinutes} minutes of active reading`,
-        ),
-        el("span", "", `Available to start until ${time(view.availableUntil)}`),
+        el("span", "", `Up to ${view.settings.maxPosts} posts from For you`),
+        el("span", "", `${view.settings.activeMinutes} active minutes`),
+        ...(view.firstUse
+          ? []
+          : [el("span", "", `Open until ${time(view.availableUntil)}`)]),
       );
-      root.append(spec, action("Open edition", start));
+      root.append(
+        spec,
+        action(view.firstUse ? "Try it now" : "Open edition", start),
+      );
       utilityLinks(root);
     } else {
       shell(
         s?.reason === "time" ? "Reading time is up." : "Between editions.",
-        "Your next batch opens at the scheduled time.",
+        "",
       );
-      root.append(
-        el("p", "brief-next-label", "NEXT EDITION"),
-        el("p", "brief-next", nextLabel()),
-      );
+      root.append(el("p", "brief-next", nextLabel()));
       utilityLinks(root);
     }
     if (error) root.append(el("p", "brief-error", error));
     const footer = el("footer", "brief-footer");
     footer.append(
-      el("span", "", "For you, with an end."),
       action(
         "Reading schedule",
         () => send({ type: "openSettings" }),
@@ -601,13 +593,8 @@
         nativeHead = el("header", "brief-native-head");
         nativeHead.id = "x-brief-native-head";
         nativeHead.append(
-          el("span", "brief-eyebrow", "X BRIEF / FOR YOU"),
           el("h1", "", editionName()),
-          el(
-            "p",
-            "",
-            `${view.session.posts.length} recommendations · one edition`,
-          ),
+          el("p", "", `${view.session.posts.length} posts`),
         );
         primary?.prepend(nativeHead);
       }

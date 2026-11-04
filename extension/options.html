@@ -9,11 +9,7 @@
   </head>
   <body>
     <main>
-      <p class="eyebrow">X BRIEF / READING SETTINGS</p>
-      <h1>Make room for the useful.</h1>
-      <p class="lead">
-        Keep discovery. Give it a place in your day, and a point where it ends.
-      </p>
+      <h1>Reading schedule</h1>
       <div class="layout">
         <form id="schedule">
           <div class="field">
@@ -25,10 +21,7 @@
               placeholder="09:00, 18:00"
               autocomplete="off"
             />
-            <p class="hint">
-              Local time, separated by commas. One edition per window. No
-              reminders.
-            </p>
+            <p class="hint">Local time, separated by commas.</p>
           </div>
           <div class="field">
             <label for="windowMinutes">Time to start a session</label
@@ -64,31 +57,13 @@
           <p class="status" id="status" role="status"></p>
         </form>
         <aside>
-          <p>
-            <strong>The algorithm stays.</strong><br />Your edition comes from
-            X’s For you recommendations, in their original order.
-          </p>
-          <p>
-            <strong>The batch stays still.</strong><br />No infinite scroll,
-            new-post banners, or automatic refreshes.
-          </p>
-          <p>
-            <strong>The stop holds.</strong><br />After your first session,
-            setting changes apply tomorrow. Refreshing or opening another tab
-            won’t reset your session.
-          </p>
-          <p>
-            Your schedule uses this device’s local timezone. Saved posts and
-            settings stay in this browser.
-          </p>
+          <p>After your first edition, schedule changes apply tomorrow.</p>
+          <p>Refreshing or opening another tab keeps the same edition.</p>
+          <p>Settings and kept posts stay in this browser.</p>
         </aside>
       </div>
       <section class="rule" id="shelf">
-        <p class="eyebrow">KEPT FOR LATER</p>
-        <h2>Something worth returning to.</h2>
-        <p class="empty">
-          A quiet shelf of posts you kept. No new recommendations.
-        </p>
+        <h2>Kept posts</h2>
         <div id="kept" class="kept"></div>
       </section>
     </main>

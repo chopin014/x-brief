@@ -8,6 +8,8 @@ Open `x.com/home` during a reading window and choose **Open edition**. Read one 
 
 The first response is capped and stripped of pagination, refresh alerts, ads, and extra recommendation modules **before X receives it**. There is no next batch button. Reaching the end gives a clear **Close edition** action. Closing, exhausting the active time budget, or reaching the 45-minute safety limit locks feed reading until the next scheduled window.
 
+On first use, **Try it now** opens one edition immediately. After it is captured, the schedule applies.
+
 Defaults: **09:00 and 18:00 local time**, a 60-minute window in which to start, at most **20 posts**, and **10 active reading minutes**. Starting near the end of a window still gives the full active-time budget. The timer pauses after 60 seconds without input and when X is hidden or unfocused. Tabs share one budget; the status control only shows a time warning near the end.
 
 Refreshing switches to a **saved copy of the same edition**. It never grants a new batch. In that copy, open a post on X for native interaction. Changes to the reading schedule take effect the next local day after the first successfully captured edition. Failed captures do not consume an edition.
@@ -27,7 +29,7 @@ npm run lint
 npm run build
 ```
 
-The installable artifact is `dist/x-brief-0.1.0.xpi`. For temporary development, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select `extension/manifest.json`. Temporary installation ends when the browser exits.
+The installable artifact is `dist/x-brief-0.1.2.xpi`. For temporary development, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select `extension/manifest.json`. Temporary installation ends when the browser exits.
 
 ## Persistent local installation in Zen
 
@@ -35,7 +37,7 @@ This checkout includes a local installer for an **existing writable Zen applicat
 
 ```sh
 python scripts/install-zen.py \
-  --xpi dist/x-brief-0.1.0.xpi \
+  --xpi dist/x-brief-0.1.2.xpi \
   --application /home/gabriel/.local/lib/openfdm/zen-private \
   --profile '/home/gabriel/.zen/yugim3sn.Default (release)'
 ```

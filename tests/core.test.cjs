@@ -3,7 +3,9 @@ const assert = require("node:assert/strict");
 const C = require("../extension/core");
 const at = (h, m = 0, d = 4) => +new Date(2026, 10, d, h, m);
 function state() {
-  return C.initial();
+  const s = C.initial();
+  s.welcomeAvailable = false;
+  return s;
 }
 function frozen(s, now = at(9)) {
   s.session.phase = "loading";
@@ -122,4 +124,19 @@ test("only the frozen batch consumes the slot; expired captures cannot freeze", 
   s.session.phase = "loading";
   assert.equal(C.freeze(s, [], at(9)), false);
   assert.deepEqual(s.used, []);
+});
+
+test("first use is available immediately, once; failed captures preserve it", () => {
+  const s = C.initial();
+  assert.equal(C.view(s, at(8)).firstUse, true);
+  C.begin(s, at(8), 1);
+  C.settle(s, at(8) + 21000);
+  assert.equal(s.welcomeAvailable, true);
+  s.session.ended = true;
+  C.begin(s, at(8, 1), 1);
+  frozen(s, at(8, 1));
+  s.session.ended = true;
+  const loaded = JSON.parse(JSON.stringify(s));
+  assert.equal(C.view(loaded, at(8, 2)).available, false);
+  assert.equal(C.view(loaded, at(8, 2)).nextAt, at(9));
 });

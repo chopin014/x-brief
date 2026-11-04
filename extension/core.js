@@ -36,6 +36,7 @@
     settings: structuredClone(DEFAULTS),
     pending: null,
     used: [],
+    welcomeAvailable: true,
     session: null,
   });
   function slots(settings, now) {
@@ -82,7 +83,11 @@
       (s) => !state.used.includes(s.key) && s.start > last,
     );
     return {
-      current: all.filter((s) => s.start <= now && now < s.end).at(-1) || null,
+      current:
+        all.filter((s) => s.start <= now && now < s.end).at(-1) ||
+        (state.welcomeAvailable
+          ? { key: "welcome", start: now, end: null }
+          : null),
       next: all.find((s) => s.start > now) || null,
     };
   }
@@ -123,6 +128,7 @@
       return false;
     }
     s.posts = posts.slice(0, s.maxPosts);
+    state.welcomeAvailable = false;
     s.error = null;
     s.diagnostic = null;
     s.phase = "frozen";
@@ -158,6 +164,7 @@
       pending: state.pending,
       session: state.session,
       available: !!current,
+      firstUse: current?.key === "welcome",
       availableUntil: current?.end || null,
       nextAt: next?.start || null,
       now,

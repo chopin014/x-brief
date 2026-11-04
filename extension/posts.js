@@ -179,6 +179,7 @@
     /Timeline|UserTweets|UserMedia|ListLatestTweets|CommunityTweets|CommunityMedia|Bookmarks|Favoriters|Retweeters|Likes|Explore|Search|ConnectTab|ForYou|Trends|Recommendations/i;
   function classify(url, body) {
     const op = operation(url, body);
+    if (/badge_count|unread_count|BadgeCount/i.test(url)) return "badge";
     if (["HomeTimeline", "HomeLatestTimeline"].includes(op)) return "home";
     if (["TweetDetail", "TweetResultByRestId"].includes(op)) return "detail";
     if (/NotificationsTimeline|Notifications/.test(op)) return "notifications";

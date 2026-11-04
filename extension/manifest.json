@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "X Brief",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Read a finite briefing. No infinite feed, refresh prompts, or extra batches until your next scheduled session.",
   "browser_specific_settings": {
     "gecko": {

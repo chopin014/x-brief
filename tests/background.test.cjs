@@ -199,3 +199,10 @@ test("same request ID is admitted for Firefox service-worker fallback before the
   assert.equal(e.state.session.phase, "frozen");
   assert.equal(e.state.session.attempts, 1);
 });
+
+test("badge polling is blocked while closed and while reading", async () => {
+  const e = environment();
+  assert.equal((await e.req("BadgeCount")).cancel, true);
+  await e.message("start");
+  assert.equal((await e.req("BadgeCount")).cancel, true);
+});

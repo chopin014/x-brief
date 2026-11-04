@@ -7,7 +7,9 @@
   if (s && !s.ended)
     p.textContent = `Session open · ${s.posts.length} posts · ${Math.ceil((s.activeLimitMs - s.activeMs) / 60000)} min left`;
   else if (view.available)
-    p.textContent = "Your next briefing is available. Start when you’re ready.";
+    p.textContent = view.firstUse
+      ? "Try your first edition now."
+      : "Edition available.";
   else
     p.textContent = `Next briefing: ${view.nextAt ? new Date(view.nextAt).toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" }) : "check your schedule"}`;
   d.append(p);

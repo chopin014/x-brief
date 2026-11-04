@@ -116,6 +116,7 @@ browser.webRequest.onBeforeRequest.addListener(
       kind = BriefPosts.classify(details.url, body),
       vars = BriefPosts.variables(details.url, body);
     if (kind === "other") return {};
+    if (kind === "badge") return { cancel: true };
     // Firefox requires creating the stream filter synchronously in the event callback.
     const responseFilter = ["home", "detail", "notifications"].includes(kind)
       ? browser.webRequest.filterResponseData(details.requestId)
