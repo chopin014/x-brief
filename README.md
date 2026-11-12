@@ -31,6 +31,14 @@ npm run build
 
 The installable artifact is `dist/x-brief-0.1.2.xpi`. For temporary development, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select `extension/manifest.json`. Temporary installation ends when the browser exits.
 
+## Install from a release
+
+1. Download `x-brief-0.1.2.xpi` from the [latest release](https://github.com/chopin014/x-brief/releases/latest).
+2. In Zen or LibreWolf, set `xpinstall.signatures.required` to `false` in `about:config`.
+3. Drag the `.xpi` into a browser window and confirm.
+
+Firefox Release and Beta only install add-ons signed by Mozilla. There, use the temporary install above.
+
 ## Persistent local installation in Zen
 
 This checkout includes a local installer for an **existing writable Zen application directory**, such as the per-user application overlay on this machine. It copies the packaged extension into `~/.local/share/x-brief/releases/` and adds a small Firefox AutoConfig resource registration. Firefox’s built-in-addon API loads this one local package at startup for the selected profile. It does not require a developer console after each restart.
@@ -38,8 +46,8 @@ This checkout includes a local installer for an **existing writable Zen applicat
 ```sh
 python scripts/install-zen.py \
   --xpi dist/x-brief-0.1.2.xpi \
-  --application /home/gabriel/.local/lib/openfdm/zen-private \
-  --profile '/home/gabriel/.zen/yugim3sn.Default (release)'
+  --application <writable Zen application directory> \
+  --profile '<Zen profile directory>'
 ```
 
 Restart that Zen application after installation. The installer preserves a backup and records all integration paths in `~/.local/share/x-brief/installation.json`. It refuses to replace an unrelated AutoConfig. Local startup configuration applies to this application; automatic installation is restricted to the specified profile. A Zen update that replaces its per-user application directory may require running the installer again.
